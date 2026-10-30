@@ -1,0 +1,21 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 2.6.0.1-backpatch-00001
+baseline: v2.6.0+backpatch.baseline
+fixes:
+  - cve: CVE-2026-113602
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2026-113602
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-json-smart/commit/a3c1823
+    not_applicable_rationale: a provider-developed fix; no upstream-authored code to credit
+    basis: original
+    artifacts:
+      - net.minidev:json-smart
+    note: New in this release; written for 2.6.0 and proposed upstream as https://github.com/netplex/json-smart-v2/pull/305, not merged there; fixed at 2.6.0.1-backpatch-00001 (backpatch-json-smart@a3c1823). Patch on upstream's latest release, ahead of an upstream fix. Upstream's next release is expected to carry its own fix and replaces this one once our CVE test passes against it.
+tests:
+  commit: a3c1823d10a4be719396938459f37d1f8d29c2be
+  command: "JAVA_HOME=<jdk-17> mvn -B clean deploy in json-smart/, with the backpatch Maven extension loaded and json-smart/pom.xml's accessors-smart dependency set from 2.6.0-SNAPSHOT to 2.6.0 first, as upstream's release-publish workflow does"
+  runtime: Azul Zulu (Java 17.0.16), Apache Maven 3.9.16, macOS aarch64
+  report: json-smart-2.6.0.1-backpatch-00001-tests.zip
+  report_sha256: 35d811aed171fbaa16be44885712a45abbe96e9ce8192a6ed08eabdc419ba1ea
+  result: pass
+  note: the full suite at the tested commit, 355 tests run, 0 failed, 0 skipped; the regression tests for CVE-2026-113602 are TestCVE2026113602 (8 cases; at the baseline 4 fail, the strict-mode cases on the String, byte[], Reader and InputStream backends)
