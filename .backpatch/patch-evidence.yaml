@@ -1,0 +1,21 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 2.4.11.1-backpatch-00001
+baseline: v2.4.11+backpatch.baseline
+fixes:
+  - cve: CVE-2026-113602
+    upstream_fix_url: https://github.com/netplex/json-smart-v2/commit/e0b5afeb3bb4f5f969c233c60e9aeca0a6338d7e
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2026-113602
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-json-smart/commit/509d5a9
+    basis: adapted
+    artifacts:
+      - net.minidev:json-smart
+    note: New in this release; ported onto 2.4.11; fixed at 2.4.11.1-backpatch-00001 (backpatch-json-smart@509d5a9).
+tests:
+  commit: 509d5a91b985aa420fe52625aa4f4e93b9584776
+  command: mvn -B -T1 -Dossindex.skip=true -Dmaven.test.failure.ignore=true clean test
+  runtime: openjdk version 11.0.20 2023-07-18 LTS, Apache Maven 3.9.16
+  report: json-smart-2.4.11.1-backpatch-00001-tests.zip
+  report_sha256: 6e08b0869ad11449ed884b4b1102e1df3944b50e5dedb5041fe5bcdc14d64147
+  result: pass
+  note: 184 tests at the patch commit, 0 of them skipped by the suite, 0 failed, 0 errors. Built and tested on Zulu 11.0.20 (Central's 2.4.11 jar names Build-Jdk-Spec 11).
